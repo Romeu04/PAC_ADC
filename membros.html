@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membros</title>
+    <link rel="stylesheet" href="membros.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="estoque.html">Estoque</a></li>
+                <li><img src="logo.png" alt="Logo" class="logo"></li>
+                <li><a href="membros.html">Membros</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <div class="header">
+                <div class="left">
+                    <p>Quantidade de Membros</p>
+                    <p class="count">2</p>
+                </div>
+                <div class="center">
+                    <h1>Membros</h1>
+                </div>
+                <div class="right">
+                    <p id="addMember">Adicionar novo membro</p>
+                    <p id="removeMember">Remover membro</p>
+                    <p id="editMember">Editar membro</p>
+                </div>
+            </div>
+            <div class="members">
+                <div class="member">
+                    <div class="photo">
+                        <img src="imagens/homem.jpg" alt="Membro 1">
+                    </div>
+                    <div class="description">
+                        <p>Miguel Henrique</p>
+                        <p>19 anos</p>
+                        <p>06/12/2001</p>
+                    </div>
+                </div>
+                <div class="member empty">
+                    <p>Vazio</p>
+                </div>
+                <div class="member empty">
+                    <p>Vazio</p>
+                </div>
+                <div class="member empty">
+                    <p>Vazio</p>
+                </div>
+                <div class="member empty">
+                    <p>Vazio</p>
+                </div>
+                <div class="member empty">
+                    <p>Vazio</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="popup" id="popup">
+        <span class="close" id="closePopup">&times;</span>
+        <h2 id="popupTitle"></h2>
+        <form id="popupForm">
+            <div class="form-group">
+                <label for="memberName">Nome:</label>
+                <input type="text" id="memberName" required>
+            </div>
+            <div class="form-group">
+                <label for="memberAge">Idade:</label>
+                <input type="number" id="memberAge" required>
+            </div>
+            <div class="form-group">
+                <label for="memberDob">Data de Nascimento:</label>
+                <input type="date" id="memberDob" required>
+            </div>
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+        const closePopup = document.getElementById('closePopup');
+        const popupTitle = document.getElementById('popupTitle');
+        const addMemberBtn = document.getElementById('addMember');
+        const removeMemberBtn = document.getElementById('removeMember');
+        const editMemberBtn = document.getElementById('editMember');
+
+        function openPopup(action) {
+            overlay.classList.add('active');
+            popup.classList.add('active');
+            popupTitle.innerText = action;
+        }
+
+        function closePopupFunction() {
+            overlay.classList.remove('active');
+            popup.classList.remove('active');
+        }
+
+        addMemberBtn.addEventListener('click', () => openPopup('Adicionar novo membro'));
+        removeMemberBtn.addEventListener('click', () => openPopup('Remover membro'));
+        editMemberBtn.addEventListener('click', () => openPopup('Editar membro'));
+        closePopup.addEventListener('click', closePopupFunction);
+        overlay.addEventListener('click', closePopupFunction);
+
+        document.getElementById('popupForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            closePopupFunction();
+        });
+    </script>
+</body>
+</html>

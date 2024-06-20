@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Style.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="fundo">
+        <div class="logo">
+            <img src="/imagens/Logo.png" alt="Logo">
+        </div>
+        <div class="login">
+            <h2 class="txtlogin">LOGIN</h2>
+            <h3>Usuário</h3>
+            <input type="text" class="usuario">
+            <h3>Senha</h3>
+            <input type="password" class="senha" id="senha">
+            <div class="show-password-container">
+                <input type="checkbox" id="showPassword" class="show-password-checkbox">
+                <label for="showPassword" class="show-password-label">Mostrar senha</label>
+            </div>
+            <button class="button" id="loginButton">Login</button>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById("showPassword").addEventListener("change", function() {
+            var senhaInput = document.getElementById("senha");
+            if (this.checked) {
+                senhaInput.type = "text";
+            } else {
+                senhaInput.type = "password";
+            }
+        });
+
+        document.getElementById("loginButton").addEventListener("click", function() {
+            window.location.href = "agenda.html";
+        });
+    </script>
+</body>
+</html>

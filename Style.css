@@ -1,0 +1,105 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #FFFFFF;
+    background-color: #000000;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fundo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 50px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+img {
+    width: 600px;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #810F0F;
+    border-radius: 15px;
+    padding: 20px;
+    width: 500px;
+    margin: 0 auto;
+    font-size: 25px;
+}
+
+h3 {
+    margin: 10px 0 5px;
+    font-size: 20px;
+    color: #FFFFFF;
+    align-self: flex-start;
+}
+
+.usuario, .senha {
+    border-radius: 8px;
+    margin: 10px 0;
+    width: 425px;
+    padding: 15px;
+    border: none; /* Adicionado para remover a borda padrão */
+}
+
+.button {
+    border-radius: 10px;
+    margin: 10px 0;
+    width: 425px;
+    padding: 15px;
+    font-size: 30px;
+    background-color: #000000;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+.txtlogin {
+    color: #FFFFFF;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+/* New CSS for show password checkbox and label */
+.show-password-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    align-self: flex-start;
+}
+
+.show-password-checkbox {
+    margin-right: 10px;
+    width: 18px; /* Ajuste do tamanho */
+    height: 18px; /* Ajuste do tamanho */
+    cursor: pointer;
+}
+
+.show-password-label {
+    font-size: 18px;
+    color: #FFFFFF;
+    cursor: pointer;
+}

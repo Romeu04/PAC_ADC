@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque</title>
+    <link rel="stylesheet" href="estoque.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="estoque.html">Estoque</a></li>
+                <li><img src="logo.png" alt="Logo" class="logo"></li>
+                <li><a href="membros.html">Membros</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <h1>Estoque</h1>
+            <div class="products">
+                <div class="product">
+                    <div class="photo">
+                        <img src="camisa.png" alt="Camisa Atlética Unissex">
+                    </div>
+                    <div class="description">
+                        <p>Camisa Atlética Unissex</p>
+                        <p>R$ 100,00</p>
+                        <div class="quantity-control">
+                            <button class="quantity-button">-</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-button">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="photo">
+                        <img src="caneca.png" alt="Caneca Atlética">
+                    </div>
+                    <div class="description">
+                        <p>Caneca Atlética</p>
+                        <p>R$ 25,00</p>
+                        <div class="quantity-control">
+                            <button class="quantity-button">-</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-button">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="photo">
+                        <img src="tirante.png" alt="Tirante Atlética">
+                    </div>
+                    <div class="description">
+                        <p>Tirante Atlética</p>
+                        <p>R$ 10,00</p>
+                        <div class="quantity-control">
+                            <button class="quantity-button">-</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-button">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="edit" id="editStock">EDITAR</div>
+        </div>
+    </main>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="popup" id="popup">
+        <span class="close" id="closePopup">&times;</span>
+        <h2 id="popupTitle">Editar Estoque</h2>
+        <form id="popupForm">
+            <div class="form-group">
+                <label for="productName">Nome do Produto:</label>
+                <input type="text" id="productName" required>
+            </div>
+            <div class="form-group">
+                <label for="productPrice">Preço:</label>
+                <input type="number" id="productPrice" required>
+            </div>
+            <div class="form-group">
+                <label for="productQuantity">Quantidade:</label>
+                <input type="number" id="productQuantity" required>
+            </div>
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+        const closePopup = document.getElementById('closePopup');
+        const editStockBtn = document.getElementById('editStock');
+
+        function openPopup() {
+            overlay.classList.add('active');
+            popup.classList.add('active');
+        }
+
+        function closePopupFunction() {
+            overlay.classList.remove('active');
+            popup.classList.remove('active');
+        }
+
+        editStockBtn.addEventListener('click', openPopup);
+        closePopup.addEventListener('click', closePopupFunction);
+        overlay.addEventListener('click', closePopupFunction);
+
+        document.getElementById('popupForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            closePopupFunction();
+        });
+    </script>
+</body>
+</html>
