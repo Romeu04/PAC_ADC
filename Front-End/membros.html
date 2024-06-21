@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Membros</title>
-    <link rel="stylesheet" href="membros.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='membros.css') }}">
 </head>
 <body>
     <header>
         <nav>
             <ul>
                 <li><a href="estoque.html">Estoque</a></li>
-                <li><img src="logo.png" alt="Logo" class="logo"></li>
+                <li><img src="/static/Logo.png" alt="Logo" class="logo"></li>
                 <li><a href="membros.html">Membros</a></li>
             </ul>
         </nav>
@@ -21,7 +21,7 @@
             <div class="header">
                 <div class="left">
                     <p>Quantidade de Membros</p>
-                    <p class="count">2</p>
+                    <p class="count">1</p>
                 </div>
                 <div class="center">
                     <h1>Membros</h1>
@@ -35,7 +35,7 @@
             <div class="members">
                 <div class="member">
                     <div class="photo">
-                        <img src="imagens/homem.jpg" alt="Membro 1">
+                        <img src="static/homem.jpg" alt="Membro 1">
                     </div>
                     <div class="description">
                         <p>Miguel Henrique</p>

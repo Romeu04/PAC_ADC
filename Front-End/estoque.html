@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estoque</title>
-    <link rel="stylesheet" href="estoque.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estoque.css') }}">
 </head>
 <body>
     <header>
         <nav>
             <ul>
                 <li><a href="estoque.html">Estoque</a></li>
-                <li><img src="logo.png" alt="Logo" class="logo"></li>
+                <li><img src="/static/Logo.png" alt="Logo" class="logo"></li>
                 <li><a href="membros.html">Membros</a></li>
             </ul>
         </nav>
