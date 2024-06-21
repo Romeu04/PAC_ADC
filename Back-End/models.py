@@ -1,10 +1,8 @@
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import UniqueConstraint, ForeignKeyConstraint
 from flask import Flask
+from main import db
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydb'
-db = SQLAlchemy(app)
 
 class Produtos(db.Model):
     __tablename__ = 'Produtos'
@@ -45,6 +43,3 @@ class logProdutos(db.Model):
     dataAlteracao = db.Column(db.Date, nullable=False)
     Produtos_codProduto = db.Column(db.Integer, db.ForeignKey('Produtos.idProduto'), nullable=False)
     Membros_idMembros = db.Column(db.Integer, db.ForeignKey('Membros.idMembros'), nullable=False)
-
-# Cria as tabelas
-db.create_all()
