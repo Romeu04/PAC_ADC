@@ -29,6 +29,8 @@ def membros():
 def agenda():
     return render_template('agenda.html')
 
+#teste
+
 if __name__ == '__main__':
     from models import Produtos, Membros, Agendamentos
     with app.app_context():
