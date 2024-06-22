@@ -7,9 +7,20 @@ def add_product_with_image(idProduto, nomeProduto, estoqueProduto, image_path, p
     db.session.add(new_product)
     db.session.commit()
 
+def add_product(nomeProduto, estoqueProduto, precoProduto):
+    print(nomeProduto, estoqueProduto, precoProduto)
+    new_product = Produtos(nomeProduto=nomeProduto, estoqueProduto=estoqueProduto, precoProduto=precoProduto)
+    db.session.add(new_product)
+    db.session.commit()
+
+
 def get_product(idProduto):
     product = Produtos.query.get(idProduto)
     return product
+
+def get_all_products():
+    products = Produtos.query.all()
+    return products
 
 def update_product(idProduto, nomeProduto, estoqueProduto, foto, precoProduto):
     product = Produtos.query.get(idProduto)

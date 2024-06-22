@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estoque</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='estoque.css') }}">
+    <script src="{{ url_for('static', filename='estoque.js') }}" defer></script>
 </head>
 <body>
     <header>
@@ -19,51 +20,8 @@
     <main>
         <div class="container">
             <h1>Estoque</h1>
-            <div class="products">
-                <div class="product">
-                    <div class="photo">
-                        <img src="camisa.png" alt="Camisa Atlética Unissex">
-                    </div>
-                    <div class="description">
-                        <p>Camisa Atlética Unissex</p>
-                        <p>R$ 100,00</p>
-                        <div class="quantity-control">
-                            <button class="quantity-button">-</button>
-                            <span class="quantity">1</span>
-                            <button class="quantity-button">+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="photo">
-                        <img src="caneca.png" alt="Caneca Atlética">
-                    </div>
-                    <div class="description">
-                        <p>Caneca Atlética</p>
-                        <p>R$ 25,00</p>
-                        <div class="quantity-control">
-                            <button class="quantity-button">-</button>
-                            <span class="quantity">1</span>
-                            <button class="quantity-button">+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="photo">
-                        <img src="tirante.png" alt="Tirante Atlética">
-                    </div>
-                    <div class="description">
-                        <p>Tirante Atlética</p>
-                        <p>R$ 10,00</p>
-                        <div class="quantity-control">
-                            <button class="quantity-button">-</button>
-                            <span class="quantity">1</span>
-                            <button class="quantity-button">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="edit" id="editStock">EDITAR</div>
+            <div id="products" class="products"></div>
+            <div class="edit" id="editStock">CADASTRAR PRODUTO</div>
         </div>
     </main>
 
@@ -88,50 +46,5 @@
             <button type="submit">Salvar</button>
         </form>
     </div>
-
-    <!-- JS para adicionar itens no banco de dados pelo botão -->
-    <script>
-    document.querySelector('.quantity-button').addEventListener('click', function() {
-        // Obtenha o id do produto ou qualquer identificador único
-        var productId = 'id_do_produto';
-
-        // Faça uma solicitação AJAX para a rota Flask
-        fetch('/add_product/' + productId, {
-            method: 'POST'
-        }).then(function(response) {
-            if (response.ok) {
-                alert('Produto adicionado com sucesso!');
-            } else {
-                alert('Erro ao adicionar produto!');
-            }
-        });
-    });
-    </script>
-
-    <script>
-        const overlay = document.getElementById('overlay');
-        const popup = document.getElementById('popup');
-        const closePopup = document.getElementById('closePopup');
-        const editStockBtn = document.getElementById('editStock');
-
-        function openPopup() {
-            overlay.classList.add('active');
-            popup.classList.add('active');
-        }
-
-        function closePopupFunction() {
-            overlay.classList.remove('active');
-            popup.classList.remove('active');
-        }
-
-        editStockBtn.addEventListener('click', openPopup);
-        closePopup.addEventListener('click', closePopupFunction);
-        overlay.addEventListener('click', closePopupFunction);
-
-        document.getElementById('popupForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            closePopupFunction();
-        });
-    </script>
 </body>
 </html>

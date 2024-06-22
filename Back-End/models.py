@@ -11,6 +11,8 @@ class Produtos(db.Model):
     estoqueProduto = db.Column(db.Integer, nullable=False)
     foto = db.Column(db.LargeBinary, nullable=True)
     precoProduto = db.Column(db.Float, nullable=False)
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class NiveisUsuarios(db.Model):
     __tablename__ = 'NiveisUsuarios'

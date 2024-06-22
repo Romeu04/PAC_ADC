@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, request, jsonify
 from database import db
 from CRUD import *
 import os
@@ -22,6 +22,11 @@ def login():
 def estoque():
     return render_template('estoque.html')
 
+@app.route('/get_all_products')
+def all_products():
+    products = get_all_products()
+    return jsonify([product.to_dict() for product in products])
+
 @app.route('/membros.html')
 def membros():
     return render_template('membros.html')
@@ -32,7 +37,7 @@ def agenda():
 
 
 @app.route('/add_product/<int:product_id>', methods=['POST', 'GET'])
-def add_product(product_id):
+def add_product_velho(product_id):
     product = get_product(product_id)
     print(product)
     if product:
@@ -41,6 +46,16 @@ def add_product(product_id):
         return 'Produto adicionado com sucesso!', 200
     else:
         return 'Produto não encontrado!', 404
+
+@app.route('/add_product', methods=['POST'])
+def add_product_form():
+    print(request.form)
+    nomeProduto = request.form['nomeProduto']
+    estoqueProduto = request.form['estoqueProduto']
+    precoProduto = request.form['precoProduto']
+    add_product(nomeProduto, estoqueProduto, precoProduto)
+    return 'Produto adicionado com sucesso!', 200
+
 
 if __name__ == '__main__':
     from models import Produtos, Membros, Agendamentos
