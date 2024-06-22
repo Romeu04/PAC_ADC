@@ -9,7 +9,7 @@ class Produtos(db.Model):
     idProduto = db.Column(db.Integer, primary_key=True)
     nomeProduto = db.Column(db.String(45), nullable=False)
     estoqueProduto = db.Column(db.Integer, nullable=False)
-    foto = db.Column(db.LargeBinary, nullable=False)
+    foto = db.Column(db.LargeBinary, nullable=True)
     precoProduto = db.Column(db.Float, nullable=False)
 
 class NiveisUsuarios(db.Model):

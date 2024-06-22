@@ -1,5 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 from database import db
+from CRUD import *
 import os
 
 parent_dir = os.path.dirname(os.getcwd())
@@ -29,7 +30,17 @@ def membros():
 def agenda():
     return render_template('agenda.html')
 
-#teste
+
+@app.route('/add_product/<int:product_id>', methods=['POST', 'GET'])
+def add_product(product_id):
+    product = get_product(product_id)
+    print(product)
+    if product:
+        product.estoqueProduto += 1
+        db.session.commit()
+        return 'Produto adicionado com sucesso!', 200
+    else:
+        return 'Produto não encontrado!', 404
 
 if __name__ == '__main__':
     from models import Produtos, Membros, Agendamentos

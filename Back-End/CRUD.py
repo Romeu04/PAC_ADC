@@ -1,7 +1,9 @@
 from models import db, Produtos, Membros, Agendamentos
-
-def add_product(nomeProduto, estoqueProduto, foto, precoProduto):
-    new_product = Produtos(nomeProduto=nomeProduto, estoqueProduto=estoqueProduto, foto=foto, precoProduto=precoProduto)
+import requests
+def add_product_with_image(idProduto, nomeProduto, estoqueProduto, image_path, precoProduto):
+    with open(image_path, 'rb') as f:
+        photo = f.read()
+    new_product = Produtos(idProduto=idProduto, nomeProduto=nomeProduto, estoqueProduto=estoqueProduto, foto=photo, precoProduto=precoProduto)
     db.session.add(new_product)
     db.session.commit()
 
