@@ -47,6 +47,16 @@ def add_product_velho(product_id):
     else:
         return 'Produto não encontrado!', 404
 
+@app.route('/update-stock', methods=['POST'])
+def update_stock():
+    data = request.get_json()
+    productId = data.get('productId')
+    newQuantity = data.get('newQuantity')
+
+    update_product_stock(productId, newQuantity)
+
+    return 'Estoque atualizado com sucesso!', 200
+
 @app.route('/add_product', methods=['POST'])
 def add_product_form():
     print(request.form)

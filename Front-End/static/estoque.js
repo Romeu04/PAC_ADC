@@ -18,7 +18,6 @@ closePopup.addEventListener('click', closePopupFunction);
 overlay.addEventListener('click', closePopupFunction);
 
 const form = document.getElementById('popupForm')
-//Função para adicionar itens novos
 const sendForm = () => {
     const nomeProduto = document.getElementById('productName').value;
     const precoProduto = document.getElementById('productPrice').value;
@@ -50,25 +49,87 @@ const get_all_products = () => {
     .then(data => {
         const products = document.getElementById('products');
         products.innerHTML = '';
-        data.forEach(product => {
-            products.innerHTML += `
-            <div class="product">
-                    <div class="photo">
-                        <img src="camisa.png" alt="Camisa Atlética Unissex">
-                    </div>
-                    <div class="description">
-                        <p>${product.nomeProduto}</p>
-                        <p>${product.precoProduto}</p>
-                        <div class="quantity-control">
-                            <button class="quantity-button">-</button>
-                            <span class="quantity">${product.estoqueProduto}</span>
-                            <button class="quantity-button">+</button>
-                        </div>
+        data.forEach((product, index) => {
+            const productHTML = `
+            <div class="product" data-id="${product.idProduto}">
+                <div class="photo">
+                    <img src="camisa.png" alt="Camisa Atlética Unissex">
+                </div>
+                <div class="description">
+                    <p>${product.idProduto}</p>
+                    <p>${product.nomeProduto}</p>
+                    <p>${product.precoProduto}</p>
+                    <div class="quantity-control">
+                        <button class="quantity-button" id="decrease-${index}">-</button>
+                        <span class="quantity" id="quantity-${index}">${product.estoqueProduto}</span>
+                        <button class="quantity-button" id="increase-${index}">+</button>
                     </div>
                 </div>
-            `
-        })
-    })
+            </div>
+            `;
+            products.innerHTML += productHTML;
+        });
+
+        data.forEach((product, index) => {
+            document.getElementById(`decrease-${index}`).addEventListener('click', () => {
+                const quantitySpan = document.getElementById(`quantity-${index}`);
+                let quantity = parseInt(quantitySpan.textContent, 10);
+                if (quantity > 0) {
+                    quantitySpan.textContent = --quantity;
+                }
+            });
+
+            document.getElementById(`increase-${index}`).addEventListener('click', () => {
+                const quantitySpan = document.getElementById(`quantity-${index}`);
+                let quantity = parseInt(quantitySpan.textContent, 10);
+                quantitySpan.textContent = ++quantity;
+            });
+        });
+    });
 }
 
 get_all_products();
+
+document.addEventListener('DOMContentLoaded', () => {
+    const salvarEstoqueBtn = document.querySelector('.salvarEstoque');
+    salvarEstoqueBtn.addEventListener('click', () => {
+        const produtosAtualizados = coletarDadosAtualizados();
+
+        produtosAtualizados.forEach(produto => {
+            update_product_stock(produto.id, produto.quantidadeAtualizada)
+            .then(response => {
+                console.log('Estoque atualizado com sucesso!', response);
+            })
+            .catch(error => {
+                console.error('Erro ao atualizar o estoque', error);
+            });
+        });
+    });
+});
+
+function coletarDadosAtualizados() {
+    const produtosAtualizados = [];
+    const produtos = document.querySelectorAll('.product');
+
+    produtos.forEach((produto) => {
+        const produtoId = produto.getAttribute('data-id');
+        const quantidadeAtualizada = parseInt(produto.querySelector('.quantity').textContent, 10);
+
+        produtosAtualizados.push({
+            id: produtoId,
+            quantidadeAtualizada
+        });
+    });
+
+    return produtosAtualizados;
+}
+
+function update_product_stock(productId, newQuantity) {
+    return fetch('/update-stock', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId, newQuantity }),
+    });
+}

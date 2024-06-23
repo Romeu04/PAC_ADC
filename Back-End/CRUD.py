@@ -31,6 +31,13 @@ def update_product(idProduto, nomeProduto, estoqueProduto, foto, precoProduto):
         product.precoProduto = precoProduto
         db.session.commit()
 
+def update_product_stock(productId, newQuantity):
+    print(productId, newQuantity)
+    product = Produtos.query.get(productId)
+    if product:
+        product.estoqueProduto = newQuantity
+        db.session.commit()
+
 def delete_product(idProduto):
     product = Produtos.query.get(idProduto)
     if product:

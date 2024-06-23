@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='estoque.css') }}">
     <script src="{{ url_for('static', filename='estoque.js') }}" defer></script>
 </head>
-
 <body>
     <header>
         <nav>
@@ -29,9 +27,7 @@
             <div class="edit" id="editStock">CADASTRAR PRODUTO</div>
         </div>
     </main>
-
     <div class="overlay" id="overlay"></div>
-
     <div class="popup" id="popup">
         <span class="close" id="closePopup">&times;</span>
         <h2 id="popupTitle">Editar Estoque</h2>
@@ -52,5 +48,4 @@
         </form>
     </div>
 </body>
-
 </html>
