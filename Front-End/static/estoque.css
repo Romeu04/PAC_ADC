@@ -143,9 +143,39 @@ h1 {
     transition: background-color 0.3s;
 }
 
+.salvarEstoque {
+    background-color: #7b1f1f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+    position: absolute;
+    right: 0;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+    position: relative;
+}
+
+.header-container h1 {
+    flex-grow: 1;
+}
+
 .edit:hover {
     background-color: #f0a500;
 }
+
+.salvarEstoque:hover {
+    background-color: #f0a500;
+}
+
 
 /* Estilo para o pop-up */
 .popup {

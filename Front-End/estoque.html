@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='estoque.css') }}">
     <script src="{{ url_for('static', filename='estoque.js') }}" defer></script>
 </head>
+
 <body>
     <header>
         <nav>
@@ -19,7 +21,10 @@
     </header>
     <main>
         <div class="container">
-            <h1>Estoque</h1>
+            <div class="header-container">
+                <h1>Estoque</h1>
+                <button class="salvarEstoque">Salvar estoque</button>
+            </div>
             <div id="products" class="products"></div>
             <div class="edit" id="editStock">CADASTRAR PRODUTO</div>
         </div>
@@ -47,4 +52,5 @@
         </form>
     </div>
 </body>
+
 </html>

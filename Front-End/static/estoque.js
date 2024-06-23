@@ -18,28 +18,31 @@ closePopup.addEventListener('click', closePopupFunction);
 overlay.addEventListener('click', closePopupFunction);
 
 const form = document.getElementById('popupForm')
+//Função para adicionar itens novos
 const sendForm = () => {
-const nomeProduto = document.getElementById('productName').value;
- const precoProduto = document.getElementById('productPrice').value;
- const estoqueProduto = document.getElementById('productQuantity').value;
+    const nomeProduto = document.getElementById('productName').value;
+    const precoProduto = document.getElementById('productPrice').value;
+    const estoqueProduto = document.getElementById('productQuantity').value;
 
-let formData = new FormData();
-formData.append('nomeProduto', nomeProduto);
-formData.append('estoqueProduto', estoqueProduto);
-formData.append('precoProduto', precoProduto);
+    let formData = new FormData();
+    formData.append('nomeProduto', nomeProduto);
+    formData.append('estoqueProduto', estoqueProduto);
+    formData.append('precoProduto', precoProduto);
 
-fetch('/add_product', {
-    method: 'POST',
-    body: formData
-})
 
-}
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
-    sendForm();
-    get_all_products();
-    closePopupFunction();
-});
+    fetch('/add_product', {
+        method: 'POST',
+        body: formData
+    })
+
+    }
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        sendForm();
+        get_all_products();
+        closePopupFunction();
+    }
+);
 
 const get_all_products = () => {
     fetch('/get_all_products')
