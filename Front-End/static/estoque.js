@@ -50,22 +50,31 @@ const get_all_products = () => {
         const products = document.getElementById('products');
         products.innerHTML = '';
         data.forEach((product, index) => {
+            let removeButtonHTML = '';
+
+            if (product.estoqueProduto === 0) {
+                removeButtonHTML = `<button class="remove-button" id="remove-${index}">Remover Produto</button>`;
+            }
+        
             const productHTML = `
-            <div class="product" data-id="${product.idProduto}">
-                <div class="photo">
-                    <img src="camisa.png" alt="Camisa Atlética Unissex">
-                </div>
-                <div class="description">
-                    <p>${product.idProduto}</p>
-                    <p>${product.nomeProduto}</p>
-                    <p>${product.precoProduto}</p>
-                    <div class="quantity-control">
-                        <button class="quantity-button" id="decrease-${index}">-</button>
-                        <span class="quantity" id="quantity-${index}">${product.estoqueProduto}</span>
-                        <button class="quantity-button" id="increase-${index}">+</button>
+                <div class="product" data-id="${product.idProduto}">
+                    <div class="photo">
+                        <!-- <img src="camisa.png" alt="Camisa Atlética Unissex"> -->
+                    </div>
+                    <div class="description">
+                        <p>${product.nomeProduto}</p>
+                        <p>${product.precoProduto}</p>
+                        <div class="quantity-control">
+                            <button class="quantity-button" id="decrease-${index}">-</button>
+                            <span class="quantity" id="quantity-${index}">${product.estoqueProduto}</span>
+                            <button class="quantity-button" id="increase-${index}">+</button>
+                        </div>
+                        <div id="productsContainer"> 
+                        <button class="remove-button" id="remove-${index}">Remover Produto</button>
+                        </div>
+                        <!-- ${removeButtonHTML} -->
                     </div>
                 </div>
-            </div>
             `;
             products.innerHTML += productHTML;
         });
