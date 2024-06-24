@@ -53,7 +53,7 @@ const get_all_products = () => {
             let removeButtonHTML = '';
 
             if (product.estoqueProduto === 0) {
-                removeButtonHTML = `<button class="remove-button" id="remove-${index}">Remover Produto</button>`;
+                removeButtonHTML = `<button class="remove-button" onclick="delete_product(${product.idProduto})">Remover Produto</button>`;
             }
         
             const productHTML = `
@@ -70,9 +70,9 @@ const get_all_products = () => {
                             <button class="quantity-button" id="increase-${index}">+</button>
                         </div>
                         <div id="productsContainer"> 
-                        <button class="remove-button" id="remove-${index}">Remover Produto</button>
+                        <!-- <button class="remove-button" onclick="${product.idProduto}">Remover Produto</button> -->
                         </div>
-                        <!-- ${removeButtonHTML} -->
+                        ${removeButtonHTML}
                     </div>
                 </div>
             `;
@@ -134,11 +134,24 @@ function coletarDadosAtualizados() {
 }
 
 function update_product_stock(productId, newQuantity) {
-    return fetch('/update-stock', {
+
+    const request = fetch('/update-stock', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ productId, newQuantity }),
     });
+    get_all_products();
+    return request
+}
+
+function delete_product(productId) {
+    fetch(`/delete-product/${productId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    get_all_products();
 }

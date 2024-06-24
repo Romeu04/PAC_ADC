@@ -66,7 +66,7 @@ def add_product_form():
     add_product(nomeProduto, estoqueProduto, precoProduto)
     return 'Produto adicionado com sucesso!', 200
 
-@app.route('/remove_product/<int:productId>', methods=['DELETE'])
+@app.route('/delete-product/<int:productId>', methods=['DELETE'])
 def remove_product(productId):
     delete_product(productId)
     return 'Produto removido com sucesso!', 200
