@@ -30,7 +30,7 @@
     <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
         <span class="close" id="closePopup">&times;</span>
-        <h2 id="popupTitle">Editar Estoque</h2>
+        <h2 id="popupTitle">Cadastrar Produto</h2>
         <form id="popupForm">
             <div class="form-group">
                 <label for="productName">Nome do Produto:</label>
@@ -39,6 +39,10 @@
             <div class="form-group">
                 <label for="productPrice">Preço:</label>
                 <input type="number" id="productPrice" required>
+            </div>
+            <div class="form-group">
+                <label for="productImage">Imagem do Produto:</label>
+                <input type="file" id="productImage" accept="image/*" required>
             </div>
             <div class="form-group">
                 <label for="productQuantity">Quantidade:</label>

@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, jsonify
+import io
+
+from flask import Flask, render_template, request, jsonify, send_from_directory, send_file
 from database import db
 from CRUD import *
 import os
@@ -13,6 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+
 
 @app.route('/login')
 def login():
@@ -35,18 +38,6 @@ def membros():
 def agenda():
     return render_template('agenda.html')
 
-
-@app.route('/add_product/<int:product_id>', methods=['POST', 'GET'])
-def add_product_velho(product_id):
-    product = get_product(product_id)
-    print(product)
-    if product:
-        product.estoqueProduto += 1
-        db.session.commit()
-        return 'Produto adicionado com sucesso!', 200
-    else:
-        return 'Produto não encontrado!', 404
-
 @app.route('/update-stock', methods=['POST'])
 def update_stock():
     data = request.get_json()
@@ -58,18 +49,29 @@ def update_stock():
     return 'Estoque atualizado com sucesso!', 200
 
 @app.route('/add_product', methods=['POST'])
-def add_product_form():
-    print(request.form)
-    nomeProduto = request.form['nomeProduto']
-    estoqueProduto = request.form['estoqueProduto']
-    precoProduto = request.form['precoProduto']
-    add_product(nomeProduto, estoqueProduto, precoProduto)
+def add_product():
+    data = request.form
+    nomeProduto = data.get('nomeProduto')
+    estoqueProduto = data.get('estoqueProduto')
+    precoProduto = data.get('precoProduto')
+    foto = request.files.get('imagemProduto')
+
+    add_product_with_image(nomeProduto, estoqueProduto, foto, precoProduto)
+
     return 'Produto adicionado com sucesso!', 200
 
 @app.route('/delete-product/<int:productId>', methods=['DELETE'])
 def remove_product(productId):
     delete_product(productId)
     return 'Produto removido com sucesso!', 200
+
+@app.route('/images/<int:productId>')
+def images(productId):
+    product = Produtos.query.get(productId)
+    if product and product.foto:
+        return send_file(io.BytesIO(product.foto), mimetype='image/jpeg')
+    else:
+        return "No image found for product", 404
 
 if __name__ == '__main__':
     from models import Produtos, Membros, Agendamentos

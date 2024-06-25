@@ -1,9 +1,16 @@
+import os
+
+from werkzeug.utils import secure_filename
 from models import db, Produtos, Membros, Agendamentos
 import requests
-def add_product_with_image(idProduto, nomeProduto, estoqueProduto, image_path, precoProduto):
-    with open(image_path, 'rb') as f:
-        photo = f.read()
-    new_product = Produtos(idProduto=idProduto, nomeProduto=nomeProduto, estoqueProduto=estoqueProduto, foto=photo, precoProduto=precoProduto)
+def add_product_with_image(nomeProduto, estoqueProduto, imagemProduto, precoProduto):
+
+    if imagemProduto:
+        photo = imagemProduto.read()
+    else:
+        photo = None
+
+    new_product = Produtos(nomeProduto=nomeProduto, estoqueProduto=estoqueProduto, foto=photo, precoProduto=precoProduto)
     db.session.add(new_product)
     db.session.commit()
 

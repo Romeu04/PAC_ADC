@@ -22,26 +22,28 @@ const sendForm = () => {
     const nomeProduto = document.getElementById('productName').value;
     const precoProduto = document.getElementById('productPrice').value;
     const estoqueProduto = document.getElementById('productQuantity').value;
+    const imagemProduto = document.getElementById('productImage').files[0]; // Obter o arquivo de imagem
 
     let formData = new FormData();
     formData.append('nomeProduto', nomeProduto);
     formData.append('estoqueProduto', estoqueProduto);
     formData.append('precoProduto', precoProduto);
+    formData.append('imagemProduto', imagemProduto); 
 
+    console.log(imagemProduto);
 
     fetch('/add_product', {
         method: 'POST',
         body: formData
     })
+}
 
-    }
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        sendForm();
-        get_all_products();
-        closePopupFunction();
-    }
-);
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    sendForm();
+    get_all_products();
+    closePopupFunction();
+});
 
 const get_all_products = () => {
     fetch('/get_all_products')
@@ -59,7 +61,7 @@ const get_all_products = () => {
             const productHTML = `
                 <div class="product" data-id="${product.idProduto}">
                     <div class="photo">
-                        <!-- <img src="camisa.png" alt="Camisa Atlética Unissex"> -->
+                        <img src="/images/${product.idProduto}" alt="Foto do Produto">
                     </div>
                     <div class="description">
                         <p>${product.nomeProduto}</p>
@@ -68,9 +70,6 @@ const get_all_products = () => {
                             <button class="quantity-button" id="decrease-${index}">-</button>
                             <span class="quantity" id="quantity-${index}">${product.estoqueProduto}</span>
                             <button class="quantity-button" id="increase-${index}">+</button>
-                        </div>
-                        <div id="productsContainer"> 
-                        <!-- <button class="remove-button" onclick="${product.idProduto}">Remover Produto</button> -->
                         </div>
                         ${removeButtonHTML}
                     </div>

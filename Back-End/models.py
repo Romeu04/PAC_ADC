@@ -1,3 +1,5 @@
+import base64
+
 from flask import Flask
 from main import db
 
@@ -11,8 +13,12 @@ class Produtos(db.Model):
     estoqueProduto = db.Column(db.Integer, nullable=False)
     foto = db.Column(db.LargeBinary, nullable=True)
     precoProduto = db.Column(db.Float, nullable=False)
+
     def to_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        data = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        if self.foto is not None:
+            data['foto'] = base64.b64encode(self.foto).decode('utf-8')
+        return data
 
 class NiveisUsuarios(db.Model):
     __tablename__ = 'NiveisUsuarios'
