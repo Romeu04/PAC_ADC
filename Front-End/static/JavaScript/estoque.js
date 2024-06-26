@@ -37,7 +37,7 @@ const get_all_products = () => {
             const productHTML = `
                 <div class="product" data-id="${product.idProduto}">
                     <div class="photo">
-                        <img src="/images/${product.idProduto}" alt="Foto do Produto">
+                        <img src="/imagem_produto/${product.idProduto}" alt="Foto do Produto">
                     </div>
                     <div class="description">
                         <p>${product.nomeProduto}</p>

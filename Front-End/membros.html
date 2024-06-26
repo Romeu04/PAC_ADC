@@ -28,22 +28,10 @@
                     <h1>Membros</h1>
                 </div>
                 <div class="right">
-                    <p id="addMember">Adicionar novo membro</p>
-                    <p id="removeMember">Remover membro</p>
-                    <p id="editMember">Editar membro</p>
+                    <button id="addMember" class="buttons">Adicionar novo membro</button>
                 </div>
             </div>
-            <div class="members">
-                <div class="member">
-                    <div class="photo">
-                        <img src="static/homem.jpg" alt="Membro 1">
-                    </div>
-                    <div class="description">
-                        <p>Miguel Henrique</p>
-                        <p>19 anos</p>
-                        <p>06/12/2001</p>
-                    </div>
-                </div>
+            <div id='members' class="members">
             </div>
         </div>
     </main>
@@ -59,12 +47,24 @@
                 <input type="text" id="memberName" required>
             </div>
             <div class="form-group">
-                <label for="memberAge">Idade:</label>
-                <input type="number" id="memberAge" required>
+                <label for="memberLastName">Sobrenome:</label>
+                <input type="text" id="memberLastName" required>
             </div>
             <div class="form-group">
                 <label for="memberDob">Data de Nascimento:</label>
                 <input type="date" id="memberDob" required>
+            </div>
+            <div class="form-group">
+                <label for="memberImage">Foto do Membro: </label>
+                <input type="file" id="memberImage" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label for="memberLogin">Email Login:</label>
+                <input type="text" id="memberLogin" required>
+            </div>
+            <div class="form-group">
+                <label for="memberPassword">Senha Login:</label>
+                <input type="text" id="memberPassword" required>
             </div>
             <button type="submit">Salvar</button>
         </form>

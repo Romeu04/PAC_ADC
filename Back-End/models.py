@@ -32,9 +32,15 @@ class Membros(db.Model):
     sobrenomeMembro = db.Column(db.String(45), nullable=False)
     dataNascimento = db.Column(db.Date, nullable=False)
     fotoMembro = db.Column(db.LargeBinary)
-    nomeLogin = db.Column(db.String(45), nullable=False, unique=True)
+    emailLogin = db.Column(db.String(45), nullable=False, unique=True)
     senhaLogin = db.Column(db.String(45), nullable=False)
     NiveisUsuarios_idNiveisUsuarios = db.Column(db.Integer, db.ForeignKey('NiveisUsuarios.idNiveisUsuarios'), nullable=True)
+
+    def to_dict(self):
+        data = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        if self.fotoMembro is not None:
+            data['fotoMembro'] = base64.b64encode(self.fotoMembro).decode('utf-8')
+        return data
 
 class Agendamentos(db.Model):
     __tablename__ = 'Agendamentos'
