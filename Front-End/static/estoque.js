@@ -2,49 +2,25 @@ const overlay = document.getElementById('overlay');
 const popup = document.getElementById('popup');
 const closePopup = document.getElementById('closePopup');
 const editStockBtn = document.getElementById('editStock');
-
-function openPopup() {
-    overlay.classList.add('active');
-    popup.classList.add('active');
-}
-
-function closePopupFunction() {
-    overlay.classList.remove('active');
-    popup.classList.remove('active');
-}
+const form = document.getElementById('popupForm')
 
 editStockBtn.addEventListener('click', openPopup);
 closePopup.addEventListener('click', closePopupFunction);
 overlay.addEventListener('click', closePopupFunction);
 
-const form = document.getElementById('popupForm')
-const sendForm = () => {
-    const nomeProduto = document.getElementById('productName').value;
-    const precoProduto = document.getElementById('productPrice').value;
-    const estoqueProduto = document.getElementById('productQuantity').value;
-    const imagemProduto = document.getElementById('productImage').files[0]; // Obter o arquivo de imagem
-
-    let formData = new FormData();
-    formData.append('nomeProduto', nomeProduto);
-    formData.append('estoqueProduto', estoqueProduto);
-    formData.append('precoProduto', precoProduto);
-    formData.append('imagemProduto', imagemProduto); 
-
-    console.log(imagemProduto);
-
-    fetch('/add_product', {
-        method: 'POST',
-        body: formData
-    })
+//Função para abrir o popup
+function openPopup() {
+    overlay.classList.add('active');
+    popup.classList.add('active');
 }
 
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
-    sendForm();
-    get_all_products();
-    closePopupFunction();
-});
+//Função para fechar o popup
+function closePopupFunction() {
+    overlay.classList.remove('active');
+    popup.classList.remove('active');
+}
 
+//Função para pegar todos os produtos
 const get_all_products = () => {
     fetch('/get_all_products')
     .then(response => response.json())
@@ -96,17 +72,66 @@ const get_all_products = () => {
     });
 }
 
-get_all_products();
+//Função para adicionar um produto novo
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
 
+        const nomeProduto = document.getElementById('productName').value;
+        const precoProduto = document.getElementById('productPrice').value;
+        const estoqueProduto = document.getElementById('productQuantity').value;
+        const imagemProduto = document.getElementById('productImage').files[0];
+
+        let formData = new FormData();
+        formData.append('nomeProduto', nomeProduto);
+        formData.append('estoqueProduto', estoqueProduto);
+        formData.append('precoProduto', precoProduto);
+        formData.append('imagemProduto', imagemProduto);
+
+        fetch('/add_product', {
+            method: 'POST',
+            body: formData
+        }).then(() => {
+            form.reset();
+            get_all_products();
+
+            if (typeof closePopupFunction === 'function') {
+                closePopupFunction();
+            }
+        }).catch(error => {
+            console.error('Erro ao enviar o formulário: ', error);
+        });
+    });
+});
+
+//Função para atualizar o estoque
 document.addEventListener('DOMContentLoaded', () => {
     const salvarEstoqueBtn = document.querySelector('.salvarEstoque');
     salvarEstoqueBtn.addEventListener('click', () => {
-        const produtosAtualizados = coletarDadosAtualizados();
+        const produtos = document.querySelectorAll('.product');
+        const produtosAtualizados = Array.from(produtos).map(produto => {
+            const produtoId = produto.getAttribute('data-id');
+            const quantidadeAtualizada = parseInt(produto.querySelector('.quantity').textContent, 10);
+            return { id: produtoId, quantidadeAtualizada };
+        });
 
-        produtosAtualizados.forEach(produto => {
-            update_product_stock(produto.id, produto.quantidadeAtualizada)
+        produtosAtualizados.forEach(({ id, quantidadeAtualizada }) => {
+            fetch('/update-stock', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productId: id, newQuantity: quantidadeAtualizada }),
+            })
             .then(response => {
-                console.log('Estoque atualizado com sucesso!', response);
+                if (!response.ok) {
+                    throw new Error('Falha ao atualizar o estoque');
+                }
+            })
+            .then(() => {
+                console.log('Estoque atualizado com sucesso!');
+                get_all_products();
             })
             .catch(error => {
                 console.error('Erro ao atualizar o estoque', error);
@@ -115,42 +140,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-function coletarDadosAtualizados() {
-    const produtosAtualizados = [];
-    const produtos = document.querySelectorAll('.product');
-
-    produtos.forEach((produto) => {
-        const produtoId = produto.getAttribute('data-id');
-        const quantidadeAtualizada = parseInt(produto.querySelector('.quantity').textContent, 10);
-
-        produtosAtualizados.push({
-            id: produtoId,
-            quantidadeAtualizada
-        });
-    });
-
-    return produtosAtualizados;
-}
-
-function update_product_stock(productId, newQuantity) {
-
-    const request = fetch('/update-stock', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ productId, newQuantity }),
-    });
-    get_all_products();
-    return request
-}
-
+//Função para deletar um produto
 function delete_product(productId) {
     fetch(`/delete-product/${productId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         },
+    })
+    .then(() => {
+        get_all_products();
     });
-    get_all_products();
 }
+
+//chamada da função get_all_products para iniciar os produtos na tela
+get_all_products();
