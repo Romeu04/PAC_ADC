@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from werkzeug.utils import secure_filename
 from models import db, Produtos, Membros, Agendamentos
@@ -51,8 +52,16 @@ def delete_product(idProduto):
         db.session.delete(product)
         db.session.commit()
 
-def add_member(nomeMembro, sobrenomeMembro, dataNascimento, fotoMembro, nomeLogin, senhaLogin, NiveisUsuarios_idNiveisUsuarios):
-    new_member = Membros(nomeMembro=nomeMembro, sobrenomeMembro=sobrenomeMembro, dataNascimento=dataNascimento, fotoMembro=fotoMembro, nomeLogin=nomeLogin, senhaLogin=senhaLogin, NiveisUsuarios_idNiveisUsuarios=NiveisUsuarios_idNiveisUsuarios)
+def add_member(nomeMembro, sobrenomeMembro, dataNascimento, fotoMembro, emailLogin, senhaLogin):
+
+    if fotoMembro:
+        photo = fotoMembro.read()
+    else:
+        photo = None
+
+    dataNascimento = datetime.strptime(dataNascimento, '%Y-%m-%d')
+
+    new_member = Membros(nomeMembro=nomeMembro, sobrenomeMembro=sobrenomeMembro, dataNascimento=dataNascimento, fotoMembro=photo, emailLogin=emailLogin, senhaLogin=senhaLogin)
     db.session.add(new_member)
     db.session.commit()
 
@@ -60,16 +69,21 @@ def get_member(idMembros):
     member = Membros.query.get(idMembros)
     return member
 
-def update_member(idMembros, nomeMembro, sobrenomeMembro, dataNascimento, fotoMembro, nomeLogin, senhaLogin, NiveisUsuarios_idNiveisUsuarios):
+def update_member(idMembros, nomeMembro, sobrenomeMembro, dataNascimento, fotoMembro, emailLogin, senhaLogin):
     member = Membros.query.get(idMembros)
     if member:
-        member.nomeMembro = nomeMembro
-        member.sobrenomeMembro = sobrenomeMembro
-        member.dataNascimento = dataNascimento
-        member.fotoMembro = fotoMembro
-        member.nomeLogin = nomeLogin
-        member.senhaLogin = senhaLogin
-        member.NiveisUsuarios_idNiveisUsuarios = NiveisUsuarios_idNiveisUsuarios
+        if nomeMembro is not None:
+            member.nomeMembro = nomeMembro
+        if sobrenomeMembro is not None:
+            member.sobrenomeMembro = sobrenomeMembro
+        if dataNascimento is not None:
+            member.dataNascimento = dataNascimento
+        if fotoMembro is not None:
+            member.fotoMembro = fotoMembro
+        if emailLogin is not None:
+            member.emailLogin = emailLogin
+        if senhaLogin is not None:
+            member.senhaLogin = senhaLogin
         db.session.commit()
 
 def delete_member(idMembros):
@@ -77,6 +91,10 @@ def delete_member(idMembros):
     if member:
         db.session.delete(member)
         db.session.commit()
+
+def get_all_members():
+    members = Membros.query.all()
+    return members
 
 def add_appointment(diaAgendamento, dataInicio, dataTermino, descricaoAgendamento, Membros_idMembros):
     new_appointment = Agendamentos(diaAgendamento=diaAgendamento, dataInicio=dataInicio, dataTermino=dataTermino, descricaoAgendamento=descricaoAgendamento, Membros_idMembros=Membros_idMembros)

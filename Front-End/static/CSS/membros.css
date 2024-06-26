@@ -82,7 +82,7 @@ nav ul li a:hover {
     color: #f0a500;
 }
 
-.members {
+#members {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -225,4 +225,15 @@ nav ul li a:hover {
 
 .overlay.active {
     display: block;
+}
+
+.buttons {
+    background-color: #7b1f1f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
 }
