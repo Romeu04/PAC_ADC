@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Administrador</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='Stilo.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/agenda.css') }}">
+    <script src="{{ url_for('static', filename='JavaScript/agenda.js') }}" defer></script>
 </head>
 <body>
     <header>
@@ -48,15 +49,5 @@
             <button id="closePopup">Fechar</button>
         </div>
     </div>
-
-    <script>
-        document.getElementById("editButton").addEventListener("click", function() {
-            document.getElementById("overlay").classList.add("active");
-        });
-
-        document.getElementById("closePopup").addEventListener("click", function() {
-            document.getElementById("overlay").classList.remove("active");
-        });
-    </script>
 </body>
 </html>
