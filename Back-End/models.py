@@ -33,8 +33,8 @@ class Membros(db.Model):
     dataNascimento = db.Column(db.Date, nullable=False)
     fotoMembro = db.Column(db.LargeBinary)
     nomeLogin = db.Column(db.String(45), nullable=False, unique=True)
-    senhaLogin = db.Column(db.String(45), nullable=False, unique=True)
-    NiveisUsuarios_idNiveisUsuarios = db.Column(db.Integer, db.ForeignKey('NiveisUsuarios.idNiveisUsuarios'), nullable=False)
+    senhaLogin = db.Column(db.String(45), nullable=False)
+    NiveisUsuarios_idNiveisUsuarios = db.Column(db.Integer, db.ForeignKey('NiveisUsuarios.idNiveisUsuarios'), nullable=True)
 
 class Agendamentos(db.Model):
     __tablename__ = 'Agendamentos'

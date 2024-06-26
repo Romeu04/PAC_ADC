@@ -11,7 +11,7 @@ static_dir = os.path.join(parent_dir, 'Front-End', 'static')
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///BD_Atletica.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
