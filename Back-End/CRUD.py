@@ -69,21 +69,30 @@ def get_member(idMembros):
     member = Membros.query.get(idMembros)
     return member
 
+def update_member_old(storedMember, updatedMember):
+    for key, value in updatedMember.__dict__.items():
+        if value is not None and key != '_sa_instance_state':
+            setattr(storedMember, key, value)
+    db.session.merge(storedMember)
+    db.session.commit()
+
 def update_member(idMembros, nomeMembro, sobrenomeMembro, dataNascimento, fotoMembro, emailLogin, senhaLogin):
     member = Membros.query.get(idMembros)
+
+    if fotoMembro:
+        photo = fotoMembro.read()
+    else:
+        photo = None
+
+    dataNascimento = datetime.strptime(dataNascimento, '%Y-%m-%d')
+
     if member:
-        if nomeMembro is not None:
-            member.nomeMembro = nomeMembro
-        if sobrenomeMembro is not None:
-            member.sobrenomeMembro = sobrenomeMembro
-        if dataNascimento is not None:
-            member.dataNascimento = dataNascimento
-        if fotoMembro is not None:
-            member.fotoMembro = fotoMembro
-        if emailLogin is not None:
-            member.emailLogin = emailLogin
-        if senhaLogin is not None:
-            member.senhaLogin = senhaLogin
+        member.nomeMembro = nomeMembro
+        member.sobrenomeMembro = sobrenomeMembro
+        member.dataNascimento = dataNascimento
+        member.fotoMembro = photo
+        member.emailLogin = emailLogin
+        member.senhaLogin = senhaLogin
         db.session.commit()
 
 def delete_member(idMembros):
