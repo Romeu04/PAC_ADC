@@ -25,12 +25,12 @@ function openPopup(id = null) {
     const deleteButton = document.getElementById('deleteButtonMember');
     form.reset();
     if (id && !deleteButton) {
-    button = document.createElement('button');
-    button.classList.add('buttons');
-    button.innerText = 'Excluir Membro';
-    button.setAttribute('onclick', `delete_member(${id})`);
-    button.setAttribute('id', 'deleteButtonMember');
-    form.appendChild(button);
+        button = document.createElement('button');
+        button.classList.add('buttons');
+        button.innerText = 'Excluir Membro';
+        button.setAttribute('onclick', `delete_member(${id})`);
+        button.setAttribute('id', 'deleteButtonMember');
+        form.appendChild(button);
     } else if (!id && deleteButton){
         form.removeChild(deleteButton);
     }
@@ -92,15 +92,16 @@ const get_all_members = () => {
 form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const idMember = document.getElementById('memberId').value;
+    const idMember = form.querySelector('#memberId').value;
 
+    //const idMember = document.getElementById('memberId').value;
     console.log(idMember);
 
-    if (!idMember) {
-        add_member();
-    } else {
+    if (idMember) {
         edit_member(idMember);
-    }
+    } else {
+        add_member();
+    }   
 });
 
 //Função para adicionar um membro
@@ -189,6 +190,7 @@ function edit_member(idMember) {
         }).then(() => {
             form.reset();
             get_all_members();
+            document.getElementById('memberId').value = null;
             closePopupFunction();
         }).catch(error => {
             console.error('Erro ao enviar o formulário: ', error);

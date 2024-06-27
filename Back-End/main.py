@@ -68,7 +68,6 @@ def all_products():
 @login_required
 def all_members():
     products = get_all_members()
-    print(products)
     return jsonify([product.to_dict() for product in products])
 
 @app.route('/update-stock', methods=['POST'])
@@ -149,8 +148,6 @@ def update_member_new():
     fotoMembro = request.files.get('memberImage')
     emailLogin = data.get('memberLogin')
     senhaLogin = data.get('memberPassword')
-
-    print(memberId)
 
     update_member(memberId, nomeMembro, sobrenomeMembro, dataNascimento, fotoMembro, emailLogin, senhaLogin)
 
