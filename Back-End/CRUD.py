@@ -16,7 +16,6 @@ def add_product_with_image(nomeProduto, estoqueProduto, imagemProduto, precoProd
     db.session.commit()
 
 def add_product(nomeProduto, estoqueProduto, precoProduto):
-    print(nomeProduto, estoqueProduto, precoProduto)
     new_product = Produtos(nomeProduto=nomeProduto, estoqueProduto=estoqueProduto, precoProduto=precoProduto)
     db.session.add(new_product)
     db.session.commit()
@@ -40,7 +39,6 @@ def update_product(idProduto, nomeProduto, estoqueProduto, foto, precoProduto):
         db.session.commit()
 
 def update_product_stock(productId, newQuantity):
-    print(productId, newQuantity)
     product = Produtos.query.get(productId)
     if product:
         product.estoqueProduto = newQuantity
@@ -90,7 +88,8 @@ def update_member(idMembros, nomeMembro, sobrenomeMembro, dataNascimento, fotoMe
         member.nomeMembro = nomeMembro
         member.sobrenomeMembro = sobrenomeMembro
         member.dataNascimento = dataNascimentos
-        member.fotoMembro = photo
+        if photo is not None:
+            member.fotoMembro = photo
         member.emailLogin = emailLogin
         member.senhaLogin = senhaLogin
         db.session.commit()
