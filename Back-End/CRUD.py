@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
-
 from werkzeug.utils import secure_filename
+
 from models import db, Produtos, Membros, Agendamentos
 import requests
 def add_product_with_image(nomeProduto, estoqueProduto, imagemProduto, precoProduto):
@@ -129,3 +129,4 @@ def delete_appointment(idAgendamentos):
     if appointment:
         db.session.delete(appointment)
         db.session.commit()
+

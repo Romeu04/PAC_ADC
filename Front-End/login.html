@@ -10,19 +10,21 @@
 <body>
     <div class="fundo">
         <div class="logo">
-            <img src="/static/Logo.png" alt="Logo">
+            <img src="{{ url_for('static', filename='Logo.png') }}" alt="Logo">
         </div>
         <div class="login">
             <h2 class="txtlogin">LOGIN</h2>
-            <h3>Usuário</h3>
-            <input type="text" class="usuario">
-            <h3>Senha</h3>
-            <input type="password" class="senha" id="senha">
-            <div class="show-password-container">
-                <input type="checkbox" id="showPassword" class="show-password-checkbox">
-                <label for="showPassword" class="show-password-label">Mostrar senha</label>
-            </div>
-            <button class="button" id="loginButton">Login</button>
+            <form action="{{ url_for('login') }}" method="post">
+                <h3>Usuário</h3>
+                <input type="text" name="username" class="usuario" required>
+                <h3>Senha</h3>
+                <input type="password" name="password" class="senha" id="senha" required>
+                <div class="show-password-container">
+                    <input type="checkbox" id="showPassword" class="show-password-checkbox">
+                    <label for="showPassword" class="show-password-label">Mostrar senha</label>
+                </div>
+                <button type="submit" class="button" id="loginButton">Login</button>
+            </form>
         </div>
     </div>
 </body>
