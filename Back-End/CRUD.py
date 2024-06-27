@@ -84,12 +84,12 @@ def update_member(idMembros, nomeMembro, sobrenomeMembro, dataNascimento, fotoMe
     else:
         photo = None
 
-    dataNascimento = datetime.strptime(dataNascimento, '%Y-%m-%d')
+    dataNascimentos = datetime.strptime(dataNascimento, '%Y-%m-%d')
 
     if member:
         member.nomeMembro = nomeMembro
         member.sobrenomeMembro = sobrenomeMembro
-        member.dataNascimento = dataNascimento
+        member.dataNascimento = dataNascimentos
         member.fotoMembro = photo
         member.emailLogin = emailLogin
         member.senhaLogin = senhaLogin

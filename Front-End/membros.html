@@ -56,7 +56,7 @@
             </div>
             <div class="form-group">
                 <label for="memberImage">Foto do Membro: </label>
-                <input type="file" id="memberImage" accept="image/*" required>
+                <input type="file" id="memberImage" accept="image/*">
             </div>
             <div class="form-group">
                 <label for="memberLogin">Email Login:</label>
@@ -64,8 +64,13 @@
             </div>
             <div class="form-group">
                 <label for="memberPassword">Senha Login:</label>
-                <input type="text" id="memberPassword" required>
+                <input type="password" name="password" id="memberPassword" required>
+                <div class="show-password-container">
+                    <input type="checkbox" id="showPassword" class="show-password-checkbox">
+                    <label for="showPassword" class="show-password-label">Mostrar senha</label>
+                </div>
             </div>
+            <input type="hidden" id="memberId" value="">
             <button type="submit">Salvar</button>
         </form>
     </div>
