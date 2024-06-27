@@ -106,10 +106,11 @@ def get_member_new(memberId):
     member = get_member(memberId)
     return jsonify(member.to_dict())
 
-@app.route('/update_member', methods=['POST'])
+@app.route('/update_member', methods=['PUT'])
 def update_member_new():
     data = request.form
-    memberId = data.get('memberId')
+
+    memberId = data.get('idMember')
     nomeMembro = data.get('memberName')
     sobrenomeMembro = data.get('memberLastName')
     dataNascimento = data.get('memberDob')
@@ -117,9 +118,16 @@ def update_member_new():
     emailLogin = data.get('memberLogin')
     senhaLogin = data.get('memberPassword')
 
+    print(memberId)
+
     update_member(memberId, nomeMembro, sobrenomeMembro, dataNascimento, fotoMembro, emailLogin, senhaLogin)
 
     return 'Membro atualizado com sucesso!', 200
+
+@app.route('/delete_member/<int:memberId>', methods=['DELETE'])
+def remove_member(memberId):
+    delete_member(memberId)
+    return 'Membro removido com sucesso!', 200
 
 if __name__ == '__main__':
     from models import Produtos, Membros, Agendamentos
