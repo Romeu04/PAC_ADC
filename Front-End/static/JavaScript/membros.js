@@ -4,6 +4,16 @@ const closePopup = document.getElementById('closePopup');
 const addMember = document.getElementById('addMember');
 const form = document.getElementById('popupForm');
 const members = document.getElementById('members');
+const countMembers = document.getElementById('countMembers');
+const showPassword = document.getElementById('showPassword');
+
+const memberId = document.getElementById('memberId');
+const memberName = document.getElementById('memberName');
+const memberLastName = document.getElementById('memberLastName');
+const memberDob = document.getElementById('memberDob');
+const memberImage = document.getElementById('memberImage');
+const memberLogin = document.getElementById('memberLogin');
+const memberPassword = document.getElementById('memberPassword');
 
 addMember.addEventListener('click', () => openPopup());
 closePopup.addEventListener('click', closePopupFunction);
@@ -11,7 +21,7 @@ overlay.addEventListener('click', closePopupFunction);
 
 //Função para botão de editar membro
 function buttonEfect() {
-    document.getElementById('members').addEventListener('click', function(event) {
+    members.addEventListener('click', function(event) {
         if (event.target && event.target.classList.contains('editMember')) {
             const onclickAttribute = event.target.getAttribute('onclick');
             const memberId = onclickAttribute.match(/\d+/)[0];
@@ -23,6 +33,8 @@ function buttonEfect() {
 //Função para abrir o popup
 function openPopup(id = null) {
     const deleteButton = document.getElementById('deleteButtonMember');
+    console.log(id);
+    console.log(deleteButton);
     form.reset();
     if (id && !deleteButton) {
         button = document.createElement('button');
@@ -46,13 +58,13 @@ function closePopupFunction() {
 }
 
 //Função para fechar o popup ao clicar no botão de submit
-document.getElementById('popupForm').addEventListener('submit', function(event) {
+form.addEventListener('submit', function(event) {
     event.preventDefault();
     closePopupFunction();
 });
 
 //Função para mostrar a senha
-document.getElementById("showPassword").addEventListener("change", function() {
+showPassword.addEventListener("change", function() {
     var senhaInput = document.getElementById("memberPassword");
     if (this.checked) {
         senhaInput.type = "text";
@@ -62,8 +74,8 @@ document.getElementById("showPassword").addEventListener("change", function() {
 });
 
 //Função para pegar todos os membros
-const get_all_members = () => {
-    fetch('/get_all_members')
+const get_all_members = async () => {
+    await fetch('/get_all_members')
     .then(response => response.json())
     .then(data => {
         members.innerHTML = '';
@@ -86,6 +98,7 @@ const get_all_members = () => {
         });
         buttonEfect();
     });
+    countMembers.innerText = members.childElementCount;
 }
 
 //Função para enviar o formulário e verificar se é para adicionar ou editar um membro
@@ -105,22 +118,15 @@ form.addEventListener('submit', function(event) {
 });
 
 //Função para adicionar um membro
-function add_member() {
-    
-    const memberName = document.getElementById('memberName').value;
-    const memberLastName = document.getElementById('memberLastName').value;
-    const memberDob = document.getElementById('memberDob').value;
-    const memberImage = document.getElementById('memberImage').files[0];
-    const memberLogin = document.getElementById('memberLogin').value;
-    const memberPassword = document.getElementById('memberPassword').value;
+function add_member() { 
 
     let formData = new FormData();
-    formData.append('memberName', memberName);
-    formData.append('memberLastName', memberLastName);
-    formData.append('memberDob', memberDob);
-    formData.append('memberImage', memberImage);
-    formData.append('memberLogin', memberLogin);
-    formData.append('memberPassword', memberPassword);
+    formData.append('memberName', memberName.value);
+    formData.append('memberLastName', memberLastName.value);
+    formData.append('memberDob', memberDob.value);
+    formData.append('memberImage', memberImage.files[0]);
+    formData.append('memberLogin', memberLogin.value);
+    formData.append('memberPassword', memberPassword.value);
     
     fetch('/add_member', {
         method: 'POST',
@@ -153,36 +159,28 @@ function get_member(idMember) {
     }).then(response => response.json())   
     .then(memberData => {
 
-        document.getElementById('memberId').value = memberData.idMembros;
-        document.getElementById('memberName').value = memberData.nomeMembro;
-        document.getElementById('memberLastName').value = memberData.sobrenomeMembro;
-        document.getElementById('memberDob').value = formatarData(memberData.dataNascimento);
-        document.getElementById('memberLogin').value = memberData.emailLogin;
-        document.getElementById('memberPassword').value = memberData.senhaLogin;
+        memberId.value = memberData.idMembros;
+        memberName.value = memberData.nomeMembro;
+        memberLastName.value = memberData.sobrenomeMembro;
+        memberDob.value = formatarData(memberData.dataNascimento);
+        memberLogin.value = memberData.emailLogin;
+        memberPassword.value = memberData.senhaLogin;
     });
 }
 
 //Função para editar um membro
 function edit_member(idMember) {
-    const form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        const memberName = document.getElementById('memberName').value;
-        const memberLastName = document.getElementById('memberLastName').value;
-        const memberDob = document.getElementById('memberDob').value;
-        const memberImage = document.getElementById('memberImage').files[0];
-        const memberLogin = document.getElementById('memberLogin').value;
-        const memberPassword = document.getElementById('memberPassword').value;
-
         let formData = new FormData();
         formData.append('idMember', idMember);
-        formData.append('memberName', memberName);
-        formData.append('memberLastName', memberLastName);
-        formData.append('memberDob', memberDob);
-        formData.append('memberImage', memberImage);
-        formData.append('memberLogin', memberLogin);
-        formData.append('memberPassword', memberPassword);
+        formData.append('memberName', memberName.value);
+        formData.append('memberLastName', memberLastName.value);
+        formData.append('memberDob', memberDob.value);
+        formData.append('memberImage', memberImage.files[0]);
+        formData.append('memberLogin', memberLogin.value);
+        formData.append('memberPassword', memberPassword.value);
 
         fetch('/update_member', {
             method: 'PUT',
