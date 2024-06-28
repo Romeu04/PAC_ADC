@@ -21,21 +21,20 @@
         <div class="container">
             <h1>Bem vindo administrador....</h1>
             <div class="content">
-                <div class="notifications">
-                    <h2>Notificações</h2>
-                </div>
                 <div class="agenda">
                     <h2>Agenda da semana</h2>
-                    <div class="days">
-                        <div class="day">Segunda</div>
-                        <div class="day">Terça</div>
-                        <div class="day">Quarta</div>
-                        <div class="day">Quinta</div>
-                        <div class="day">Sexta</div>
-                        <div class="day">Sábado</div>
-                        <div class="day">Domingo</div>
+                    <div class="edit" id="editButton">Adicionar Evento</div>
+                    <div id="eventList">
+                        {% for event in events %}
+                        <div class="event">
+                            <h3>{{ event.title }}</h3>
+                            <p>{{ event.description }}</p>
+                            <p>{{ event.start_time }} - {{ event.end_time }}</p>
+                            <a href="{{ url_for('update_event', event_id=event.id) }}">Editar</a>
+                            <a href="{{ url_for('delete_event', event_id=event.id) }}">Deletar</a>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="edit" id="editButton">Editar</div>
                 </div>
             </div>
         </div>
@@ -43,11 +42,21 @@
 
     <div class="overlay" id="overlay">
         <div class="popup">
-            <h2>Editar Agenda</h2>
-            <textarea rows="5" cols="33"></textarea>
-            <br>
+            <h2>Adicionar Evento</h2>
+            <form action="{{ url_for('add_event') }}" method="POST">
+                <label for="title">Título:</label>
+                <input type="text" id="title" name="title" required>
+                <label for="description">Descrição:</label>
+                <textarea id="description" name="description"></textarea>
+                <label for="start_time">Início:</label>
+                <input type="datetime-local" id="start_time" name="start_time" required>
+                <label for="end_time">Fim:</label>
+                <input type="datetime-local" id="end_time" name="end_time" required>
+                <button type="submit">Adicionar</button>
+            </form>
             <button id="closePopup">Fechar</button>
         </div>
+
     </div>
 </body>
 </html>

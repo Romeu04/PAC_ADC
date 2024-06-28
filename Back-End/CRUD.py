@@ -1,8 +1,7 @@
 import os
 from datetime import datetime
 from werkzeug.utils import secure_filename
-
-from models import db, Produtos, Membros, Agendamentos
+from models import db, Produtos, Membros, Agendamentos,Event
 import requests
 def add_product_with_image(nomeProduto, estoqueProduto, imagemProduto, precoProduto):
 
