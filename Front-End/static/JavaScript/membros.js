@@ -90,7 +90,7 @@ const get_all_members = async () => {
                         <p>${member.nomeMembro} ${member.sobrenomeMembro}</p>
                         <p>Data de Nascimento: ${member.dataNascimento}</p>
                         <p>Email: ${member.emailLogin}</p>
-                        <button id="editMember" class="buttons editMember" onclick="edit_member(${member.idMembros})">Editar Membro</button>
+                        <button id="editMember_${index}" class="buttons editMember" onclick="get_member(${member.idMembros})">Editar Membro</button>
                     </div>
                 </div>
             `;
@@ -140,6 +140,7 @@ function add_member() {
     });
 }
 
+
 //Função para buscar um membro
 function get_member(idMember) {
 
@@ -170,9 +171,7 @@ function get_member(idMember) {
 
 //Função para editar um membro
 function edit_member(idMember) {
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-
+    
         let formData = new FormData();
         formData.append('idMember', idMember);
         formData.append('memberName', memberName.value);
@@ -188,12 +187,11 @@ function edit_member(idMember) {
         }).then(() => {
             form.reset();
             get_all_members();
-            document.getElementById('memberId').value = null;
+            document.getElementById('memberId').value = "";
             closePopupFunction();
         }).catch(error => {
             console.error('Erro ao enviar o formulário: ', error);
         });
-    });
 }
 
 //Função para deletar um membro

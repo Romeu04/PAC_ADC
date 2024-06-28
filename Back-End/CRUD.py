@@ -50,6 +50,10 @@ def delete_product(idProduto):
         db.session.delete(product)
         db.session.commit()
 
+def validade_email(email):
+    return len(Membros.query.filter_by(emailLogin=email).all()) == 0
+
+
 def add_member(nomeMembro, sobrenomeMembro, dataNascimento, fotoMembro, emailLogin, senhaLogin):
 
     if fotoMembro:
