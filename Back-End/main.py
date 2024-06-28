@@ -174,11 +174,17 @@ def add_member_new():
     dataNascimento = data.get('memberDob')
     fotoMembro = request.files.get('memberImage')
     emailLogin = data.get('memberLogin')
+    validadar =validade_email(emailLogin)
     senhaLogin = data.get('memberPassword')
+    print('----')
+    print(validadar)
+    print('---')
+    if(validadar):
+        add_member(nomeMembro, sobrenomeMembro, dataNascimento, fotoMembro, emailLogin, senhaLogin)
+        return 'Membro adicionado com sucesso!', 200
 
-    add_member(nomeMembro, sobrenomeMembro, dataNascimento, fotoMembro, emailLogin, senhaLogin)
+    return 'Membro ja existe', 200
 
-    return 'Membro adicionado com sucesso!', 200
 
 @app.route('/get_member/<int:memberId>')
 @login_required
