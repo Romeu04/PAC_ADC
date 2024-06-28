@@ -1,3 +1,5 @@
+/* CSS/agenda.css */
+
 html {
     font-family: Arial, Helvetica, sans-serif;
     color: #FFFFFF;
@@ -48,48 +50,68 @@ nav ul li a {
 
 .content {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 20px;
-}
-
-.notifications {
-    background-color: #7b1f1f;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 30%;
 }
 
 .agenda {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 65%;
+    width: 100%;
+    color: #333;
 }
 
 .agenda h2 {
     margin-top: 0;
 }
 
-.days {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.day {
-    background-color: #d3d3d3;
-    border-radius: 10px;
-    width: 48%;
-    margin-bottom: 10px;
-    padding: 20px;
-    text-align: center;
-}
-
 .edit {
-    margin-top: 10px;
+    margin: 20px 0;
     color: #7b1f1f;
     cursor: pointer;
+    font-size: 16px;
+    border: 1px solid #7b1f1f;
+    border-radius: 5px;
+    padding: 10px 20px;
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.edit:hover {
+    background-color: #7b1f1f;
+    color: white;
+}
+
+#eventList {
+    margin-top: 20px;
+    text-align: left;
+}
+
+#eventList .event {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#eventList .event h3 {
+    margin: 0 0 5px;
+}
+
+#eventList .event p {
+    margin: 5px 0;
+}
+
+#eventList .event a {
+    color: #7b1f1f;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+#eventList .event a:hover {
+    text-decoration: underline;
 }
 
 .overlay {
@@ -109,22 +131,25 @@ nav ul li a {
 
 .popup {
     background-color: white;
-    padding: 20px;
+    padding: 50px;
     border-radius: 10px;
-    width: 300px;
-    margin: 100px auto;
+    width: 350px;
+    margin: 80px auto;
     text-align: center;
     position: relative;
 }
 
 .popup h2 {
     margin-top: 0;
+    color: #333;
 }
 
-.popup textarea {
+.popup textarea, .popup input {
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .popup button {
@@ -135,6 +160,7 @@ nav ul li a {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-bottom: 10px
 }
 
 .popup button:hover {

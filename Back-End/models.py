@@ -1,7 +1,9 @@
 import base64
 
 from flask import Flask
-from main import db
+from database import db
+
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://user:password@localhost/mydb'
@@ -57,3 +59,13 @@ class logProdutos(db.Model):
     dataAlteracao = db.Column(db.Date, nullable=False)
     Produtos_codProduto = db.Column(db.Integer, db.ForeignKey('Produtos.idProduto'), nullable=False)
     Membros_idMembros = db.Column(db.Integer, db.ForeignKey('Membros.idMembros'), nullable=False)
+
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    start_time = db.Column(db.DateTime, nullable=False)
+    end_time = db.Column(db.DateTime, nullable=False)
+
+    def __repr__(self):
+        return f'<Event {self.title}>'
