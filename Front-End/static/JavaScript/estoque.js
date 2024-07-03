@@ -2,7 +2,7 @@ const overlay = document.getElementById('overlay');
 const popup = document.getElementById('popup');
 const closePopup = document.getElementById('closePopup');
 const editStockBtn = document.getElementById('editStock');
-const form = document.getElementById('popupForm')
+const form = document.getElementById('popupForm');
 
 editStockBtn.addEventListener('click', openPopup);
 closePopup.addEventListener('click', closePopupFunction);
@@ -33,7 +33,9 @@ const get_all_products = () => {
             if (product.estoqueProduto === 0) {
                 removeButtonHTML = `<button class="remove-button" onclick="delete_product(${product.idProduto})">Remover Produto</button>`;
             }
-        
+
+            const formattedPrice = product.precoProduto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
             const productHTML = `
                 <div class="product" data-id="${product.idProduto}">
                     <div class="photo">
@@ -41,7 +43,7 @@ const get_all_products = () => {
                     </div>
                     <div class="description">
                         <p>${product.nomeProduto}</p>
-                        <p>${product.precoProduto}</p>
+                        <p>${formattedPrice}</p>
                         <div class="quantity-control">
                             <button class="quantity-button" id="decrease-${index}">-</button>
                             <span class="quantity" id="quantity-${index}">${product.estoqueProduto}</span>

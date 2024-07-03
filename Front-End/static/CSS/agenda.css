@@ -130,13 +130,16 @@ nav ul li a {
 }
 
 .popup {
-    background-color: white;
-    padding: 50px;
-    border-radius: 10px;
-    width: 350px;
-    margin: 80px auto;
-    text-align: center;
-    position: relative;
+position: relative;
+  margin: 15% auto; /* Centro vertical e horizontal */
+  padding: 20px;
+  width: 100%; /* Largura do popup (ajuste conforme necessário) */
+  max-width: 600px; /* Largura máxima do popup */
+  background-color: white;
+  border: 1px solid #888;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  text-align: center;
 }
 
 .popup h2 {
@@ -145,7 +148,7 @@ nav ul li a {
 }
 
 .popup textarea, .popup input {
-    width: 100%;
+    width: 85%;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;

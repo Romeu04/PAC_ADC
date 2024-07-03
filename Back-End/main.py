@@ -1,8 +1,10 @@
 import io
 
 from flask import Flask, render_template, request, jsonify, send_from_directory, send_file, redirect, session, url_for,flash
+
 from database import db
 from CRUD import *
+
 import os
 
 from models import Produtos, Membros, Agendamentos, Event
@@ -87,29 +89,14 @@ def delete_event(event_id):
     return redirect(url_for('agenda'))
 
 
-@app.route('/update_event/<int:event_id>', methods=['GET', 'POST'])
-@login_required
-def update_event(event_id):
-    event = Event.form(event_id)
-    if request.method == 'POST':
-        event.title = request.form['title']
-        event.description = request.form['description']
-        event.start_time = datetime.strptime(request.form['start_time'], '%Y-%m-%dT%H:%M')
-        event.end_time = datetime.strptime(request.form['end_time'], '%Y-%m-%dT%H:%M')
-
-        db.session.commit()
-        flash('Event updated successfully!')
-        return redirect(url_for('agenda'))
-
 @app.route('/get_all_products')
-
 @login_required
 def all_products():
     products = get_all_products()
     return jsonify([product.to_dict() for product in products])
 
 @app.route('/get_all_members')
-@login_required
+
 def all_members():
     products = get_all_members()
     return jsonify([product.to_dict() for product in products])
