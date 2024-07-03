@@ -6,6 +6,26 @@
     <title>Painel do Administrador</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/agenda.css') }}">
     <script src="{{ url_for('static', filename='JavaScript/agenda.js') }}" defer></script>
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -30,7 +50,7 @@
                             <h3>{{ event.title }}</h3>
                             <p>{{ event.description }}</p>
                             <p>{{ event.start_time }} - {{ event.end_time }}</p>
-                            <a href="{{ url_for('update_event', event_id=event.id) }}">Editar</a>
+                            <a href="#" onclick="openEditPopup({{ event.id }}, '{{ event.title }}', '{{ event.description }}', '{{ event.start_time }}', '{{ event.end_time }}')"></a>
                             <a href="{{ url_for('delete_event', event_id=event.id) }}">Deletar</a>
                         </div>
                         {% endfor %}
@@ -40,7 +60,7 @@
         </div>
     </main>
 
-    <div class="overlay" id="overlay">
+    <div class="overlay" id="addEventOverlay">
         <div class="popup">
             <h2>Adicionar Evento</h2>
             <form action="{{ url_for('add_event') }}" method="POST">
@@ -54,9 +74,81 @@
                 <input type="datetime-local" id="end_time" name="end_time" required>
                 <button type="submit">Adicionar</button>
             </form>
-            <button id="closePopup">Fechar</button>
+            <button onclick="closeAddPopup()">Fechar</button>
         </div>
-
     </div>
+
+    <div class="overlay" id="editEventOverlay">
+        <div class="popup">
+            <h2>Editar Evento</h2>
+            <form id="editEventForm">
+                <label for="edit_title">Título:</label>
+                <input type="text" id="edit_title" name="title" required>
+                <label for="edit_description">Descrição:</label>
+                <textarea id="edit_description" name="description"></textarea>
+                <label for="edit_start_time">Início:</label>
+                <input type="datetime-local" id="edit_start_time" name="start_time" required>
+                <label for="edit_end_time">Fim:</label>
+                <input type="datetime-local" id="edit_end_time" name="end_time" required>
+                <button type="button" onclick="updateEvent()">Atualizar</button>
+            </form>
+            <button onclick="closeEditPopup()">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        let currentEventId = null;
+
+        function openAddPopup() {
+            document.getElementById('addEventOverlay').style.display = 'flex';
+        }
+
+        function closeAddPopup() {
+            document.getElementById('addEventOverlay').style.display = 'none';
+        }
+
+        function openEditPopup(id, title, description, start_time, end_time) {
+            currentEventId = id;
+            document.getElementById('edit_title').value = title;
+            document.getElementById('edit_description').value = description;
+            document.getElementById('edit_start_time').value = new Date(start_time).toISOString().slice(0, 16);
+            document.getElementById('edit_end_time').value = new Date(end_time).toISOString().slice(0, 16);
+            document.getElementById('editEventOverlay').style.display = 'flex';
+        }
+
+        function closeEditPopup() {
+            document.getElementById('editEventOverlay').style.display = 'none';
+        }
+
+        function updateEvent() {
+            const title = document.getElementById('edit_title').value;
+            const description = document.getElementById('edit_description').value;
+            const start_time = document.getElementById('edit_start_time').value;
+            const end_time = document.getElementById('edit_end_time').value;
+
+            fetch(`/update_event/${currentEventId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title, description, start_time, end_time })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert('Evento atualizado com sucesso');
+                    closeEditPopup();
+                    // Atualize a lista de eventos conforme necessário
+                    location.reload();
+                }
+            })
+            .catch(error => console.error('Erro:', error));
+        }
+
+        document.getElementById('editButton').addEventListener('click', openAddPopup);
+        document.getElementById('closePopup').addEventListener('click', closeAddPopup);
+    </script>
 </body>
 </html>
