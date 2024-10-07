@@ -176,8 +176,6 @@ h1 {
     background-color: #f0a500;
 }
 
-
-/* Estilo para o pop-up */
 .popup {
     display: none;
     position: fixed;
@@ -256,7 +254,6 @@ h1 {
 .overlay.active {
     display: block;
 }
-
 
 .remove-button{
     background-color: #7b1f1f;

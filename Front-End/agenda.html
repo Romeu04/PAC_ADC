@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .popup {
             background: white;
             padding: 20px;
@@ -27,6 +29,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
@@ -50,7 +53,8 @@
                             <h3>{{ event.title }}</h3>
                             <p>{{ event.description }}</p>
                             <p>{{ event.start_time }} - {{ event.end_time }}</p>
-                            <a href="#" onclick="openEditPopup({{ event.id }}, '{{ event.title }}', '{{ event.description }}', '{{ event.start_time }}', '{{ event.end_time }}')"></a>
+                            <a href="#"
+                                onclick="openEditPopup('{{ event.id }}', '{{ event.title }}', '{{ event.description }}', '{{ event.start_time }}', '{{ event.end_time }}')">Editar</a>
                             <a href="{{ url_for('delete_event', event_id=event.id) }}">Deletar</a>
                         </div>
                         {% endfor %}
@@ -133,22 +137,23 @@
                 },
                 body: JSON.stringify({ title, description, start_time, end_time })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    alert('Evento atualizado com sucesso');
-                    closeEditPopup();
-                    // Atualize a lista de eventos conforme necessário
-                    location.reload();
-                }
-            })
-            .catch(error => console.error('Erro:', error));
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        alert('Evento atualizado com sucesso');
+                        closeEditPopup();
+                        // Atualize a lista de eventos conforme necessário
+                        location.reload();
+                    }
+                })
+                .catch(error => console.error('Erro:', error));
         }
 
         document.getElementById('editButton').addEventListener('click', openAddPopup);
         document.getElementById('closePopup').addEventListener('click', closeAddPopup);
     </script>
 </body>
+
 </html>

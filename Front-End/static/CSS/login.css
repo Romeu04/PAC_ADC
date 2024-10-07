@@ -57,7 +57,7 @@ h3 {
     margin: 10px 0;
     width: 425px;
     padding: 15px;
-    border: none; /* Adicionado para remover a borda padrão */
+    border: none;
 }
 
 .button {
@@ -83,7 +83,6 @@ h3 {
     margin-bottom: 20px;
 }
 
-/* New CSS for show password checkbox and label */
 .show-password-container {
     display: flex;
     align-items: center;
@@ -93,8 +92,8 @@ h3 {
 
 .show-password-checkbox {
     margin-right: 10px;
-    width: 18px; /* Ajuste do tamanho */
-    height: 18px; /* Ajuste do tamanho */
+    width: 18px;
+    height: 18px;
     cursor: pointer;
 }
 

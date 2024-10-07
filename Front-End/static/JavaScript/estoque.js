@@ -23,20 +23,20 @@ function closePopupFunction() {
 //Função para pegar todos os produtos
 const get_all_products = () => {
     fetch('/get_all_products')
-    .then(response => response.json())
-    .then(data => {
-        const products = document.getElementById('products');
-        products.innerHTML = '';
-        data.forEach((product, index) => {
-            let removeButtonHTML = '';
+        .then(response => response.json())
+        .then(data => {
+            const products = document.getElementById('products');
+            products.innerHTML = '';
+            data.forEach((product, index) => {
+                let removeButtonHTML = '';
 
-            if (product.estoqueProduto === 0) {
-                removeButtonHTML = `<button class="remove-button" onclick="delete_product(${product.idProduto})">Remover Produto</button>`;
-            }
+                if (product.estoqueProduto === 0) {
+                    removeButtonHTML = `<button class="remove-button" onclick="delete_product(${product.idProduto})">Remover Produto</button>`;
+                }
 
-            const formattedPrice = product.precoProduto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                const formattedPrice = product.precoProduto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-            const productHTML = `
+                const productHTML = `
                 <div class="product" data-id="${product.idProduto}">
                     <div class="photo">
                         <img src="/imagem_produto/${product.idProduto}" alt="Foto do Produto">
@@ -53,31 +53,31 @@ const get_all_products = () => {
                     </div>
                 </div>
             `;
-            products.innerHTML += productHTML;
-        });
-
-        data.forEach((product, index) => {
-            document.getElementById(`decrease-${index}`).addEventListener('click', () => {
-                const quantitySpan = document.getElementById(`quantity-${index}`);
-                let quantity = parseInt(quantitySpan.textContent, 10);
-                if (quantity > 0) {
-                    quantitySpan.textContent = --quantity;
-                }
+                products.innerHTML += productHTML;
             });
 
-            document.getElementById(`increase-${index}`).addEventListener('click', () => {
-                const quantitySpan = document.getElementById(`quantity-${index}`);
-                let quantity = parseInt(quantitySpan.textContent, 10);
-                quantitySpan.textContent = ++quantity;
+            data.forEach((product, index) => {
+                document.getElementById(`decrease-${index}`).addEventListener('click', () => {
+                    const quantitySpan = document.getElementById(`quantity-${index}`);
+                    let quantity = parseInt(quantitySpan.textContent, 10);
+                    if (quantity > 0) {
+                        quantitySpan.textContent = --quantity;
+                    }
+                });
+
+                document.getElementById(`increase-${index}`).addEventListener('click', () => {
+                    const quantitySpan = document.getElementById(`quantity-${index}`);
+                    let quantity = parseInt(quantitySpan.textContent, 10);
+                    quantitySpan.textContent = ++quantity;
+                });
             });
         });
-    });
 }
 
 //Função para adicionar um produto novo
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('form');
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault();
 
         const nomeProduto = document.getElementById('productName').value;
@@ -126,18 +126,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify({ productId: id, newQuantity: quantidadeAtualizada }),
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Falha ao atualizar o estoque');
-                }
-            })
-            .then(() => {
-                console.log('Estoque atualizado com sucesso!');
-                get_all_products();
-            })
-            .catch(error => {
-                console.error('Erro ao atualizar o estoque', error);
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Falha ao atualizar o estoque');
+                    }
+                })
+                .then(() => {
+                    console.log('Estoque atualizado com sucesso!');
+                    get_all_products();
+                })
+                .catch(error => {
+                    console.error('Erro ao atualizar o estoque', error);
+                });
         });
     });
 });
@@ -150,9 +150,9 @@ function delete_product(productId) {
             'Content-Type': 'application/json',
         },
     })
-    .then(() => {
-        get_all_products();
-    });
+        .then(() => {
+            get_all_products();
+        });
 }
 
 //chamada da função get_all_products para iniciar os produtos na tela

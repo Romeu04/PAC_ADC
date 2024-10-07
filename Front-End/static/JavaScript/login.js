@@ -1,4 +1,4 @@
-document.getElementById("showPassword").addEventListener("change", function() {
+document.getElementById("showPassword").addEventListener("change", function () {
     var senhaInput = document.getElementById("senha");
     if (this.checked) {
         senhaInput.type = "text";
@@ -7,6 +7,6 @@ document.getElementById("showPassword").addEventListener("change", function() {
     }
 });
 
-document.getElementById("loginButton").addEventListener("click", function() {
+document.getElementById("loginButton").addEventListener("click", function () {
     window.location.href = "agenda.html";
 });

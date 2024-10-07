@@ -21,7 +21,7 @@ overlay.addEventListener('click', closePopupFunction);
 
 // Função para botão de editar membro
 function buttonEfect() {
-    members.addEventListener('click', function(event) {
+    members.addEventListener('click', function (event) {
         if (event.target && event.target.classList.contains('editMember')) {
             const onclickAttribute = event.target.getAttribute('onclick');
             const memberId = onclickAttribute.match(/\d+/)[0];
@@ -41,7 +41,7 @@ function openPopup(id = null) {
         button.setAttribute('onclick', `delete_member(${id})`);
         button.setAttribute('id', 'deleteButtonMember');
         form.appendChild(button);
-    } else if (!id && deleteButton){
+    } else if (!id && deleteButton) {
         form.removeChild(deleteButton);
     }
     overlay.classList.add('active');
@@ -56,7 +56,7 @@ function closePopupFunction() {
 }
 
 // Função para mostrar a senha
-showPassword.addEventListener("change", function() {
+showPassword.addEventListener("change", function () {
     var senhaInput = document.getElementById("memberPassword");
     senhaInput.type = this.checked ? "text" : "password";
 });
@@ -64,32 +64,32 @@ showPassword.addEventListener("change", function() {
 // Função para pegar todos os membros
 const get_all_members = async () => {
     await fetch('/get_all_members')
-    .then(response => response.json())
-    .then(data => {
-        members.innerHTML = '';
-        data.forEach((member, index) => {
-            const memberHTML = `
-<div class="member" data-id="${member.idMembros}">
-<div class="photo">
-<img src="/imagem_membro/${member.idMembros}" alt="Foto do Membro">
-</div>
-<div class="description">
-<p>${member.nomeMembro} ${member.sobrenomeMembro}</p>
-<p>Data de Nascimento: ${formatarData(member.dataNascimento)}</p>
-<p>Email: ${member.emailLogin}</p>
-<button class="buttons editMember" onclick="edit_member(${member.idMembros})">Editar Membro</button>
-</div>
-</div>
+        .then(response => response.json())
+        .then(data => {
+            members.innerHTML = '';
+            data.forEach((member, index) => {
+                const memberHTML = `
+                <div class="member" data-id="${member.idMembros}">
+                <div class="photo">
+                <img src="/imagem_membro/${member.idMembros}" alt="Foto do Membro">
+                </div>
+                <div class="description">
+                <p>${member.nomeMembro} ${member.sobrenomeMembro}</p>
+                <p>Data de Nascimento: ${formatarData(member.dataNascimento)}</p>
+                <p>Email: ${member.emailLogin}</p>
+                <button class="buttons editMember" onclick="edit_member(${member.idMembros})">Editar Membro</button>
+                </div>
+                </div>
             `;
-            members.innerHTML += memberHTML;
+                members.innerHTML += memberHTML;
+            });
+            buttonEfect();
         });
-        buttonEfect();
-    });
     countMembers.innerText = members.childElementCount;
 }
 
 // Função para enviar o formulário e verificar se é para adicionar ou editar um membro
-form.addEventListener('submit', function(event) {
+form.addEventListener('submit', function (event) {
     event.preventDefault();
 
     const idMember = form.querySelector('#memberId').value;
@@ -138,14 +138,14 @@ function get_member(idMember) {
     fetch(`/get_member/${idMember}`, {
         method: 'GET'
     }).then(response => response.json())
-    .then(memberData => {
-        memberId.value = memberData.idMembros;
-        memberName.value = memberData.nomeMembro;
-        memberLastName.value = memberData.sobrenomeMembro;
-        memberDob.value = formatarDataInput(memberData.dataNascimento);
-        memberLogin.value = memberData.emailLogin;
-        memberPassword.value = memberData.senhaLogin;
-    });
+        .then(memberData => {
+            memberId.value = memberData.idMembros;
+            memberName.value = memberData.nomeMembro;
+            memberLastName.value = memberData.sobrenomeMembro;
+            memberDob.value = formatarDataInput(memberData.dataNascimento);
+            memberLogin.value = memberData.emailLogin;
+            memberPassword.value = memberData.senhaLogin;
+        });
 }
 
 // Função para editar um membro
